@@ -22,17 +22,20 @@ export const AuthProvider = ({ children}) => {
      const [isAuthenticated, setIsAuthenticated]= useState(false);
      const [errors, setErrors]= useState([]);
      const [loading, setLoading] = useState(true);
+     const [isAdmin, setIsAdmin]= useState(false);
 
      const signup = async ( user ) => {
       try {
         const res = await registerRequest(user);
         console.log(res.data);
+        setIsAdmin(false);
         setUser(res.data);
         setIsAuthenticated(true);
       } catch (error) {
        // console.log([error.response.data.message]);
        //console.log(errors);
         setErrors([error.response.data.message]);
+        setIsAuthenticated(false);
       }
     }// fin de signip
 
@@ -42,9 +45,11 @@ export const AuthProvider = ({ children}) => {
         console.log(res);
         setUser(res.data);
         setIsAuthenticated(true);
+        setIsAdmin(res.data.isAdmin);
       }catch(error){
         //console.log(error)
         setErrors([error.response.data.message]);
+        setIsAuthenticated(false);
       }
     }// fin de signin
 
@@ -53,6 +58,7 @@ export const AuthProvider = ({ children}) => {
       Cookies.remove('token');
       setIsAuthenticated(false);
       setUser(null)
+      setIsAdmin(false);
     }// fin de logout
     
     useEffect ( ()=>{
@@ -72,6 +78,7 @@ export const AuthProvider = ({ children}) => {
         if (!cookies.token) {
           setIsAuthenticated(false);
           setLoading(false);
+          setIsAdmin(false);
            return setUser(null);
         }
     
@@ -83,6 +90,7 @@ export const AuthProvider = ({ children}) => {
           if (!res.data) {
             setIsAuthenticated(false);
             setLoading(false);
+            setIsAdmin(false);
             return  setUser(null);
           }
     
@@ -96,7 +104,9 @@ export const AuthProvider = ({ children}) => {
           setIsAuthenticated(false);
           setLoading(false); // El usuario no está autenticado
           setUser(null); // Establecemos los datos del usuario en null
+          setIsAdmin(false);
         }
+        setLoading(false);
       }
     
       checkLogin(); // Llamamos a la función al inicializar el componente
@@ -111,7 +121,8 @@ export const AuthProvider = ({ children}) => {
         isAuthenticated,
         errors,
         loading,
-        logout
+        logout,
+        isAdmin
       }}>
         {children}
       </AuthContext.Provider>

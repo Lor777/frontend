@@ -10,6 +10,7 @@ import ProtectedRoute from './ProtectedRoute';
 import { ProductsProvider } from './context/ProductContext';
 import Navbar from './components/Navbar';
 import NotFound from './pages/NotFound';
+import  AllProductsPage from './pages/AllProductsPage';
 
 //import React from 'react'
 
@@ -37,6 +38,7 @@ function App(){
           <Route path='/products' element={<ProductsPage />} />
           <Route path='/add-product' element={<ProductsFormPage />} />
           <Route path='/products/:id' element={<ProductsFormPage />} />
+          <Route path='/getallproducts/' element={<AllProductsPage />} />
           </Route>
 
           <Route path="*" element={<NotFound />}/>

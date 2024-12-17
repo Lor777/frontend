@@ -2,6 +2,7 @@ import axios from './axios';
 
 export  const getProductsRequest = ()=> axios.get('/products');
 
+export const getAllProductsRequest = () =>axios.get('/getallproducts')
 
 export  const getProductRequest = (id)=> axios.get('/products/'+id);
 

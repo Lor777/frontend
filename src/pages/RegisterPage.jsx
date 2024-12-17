@@ -88,7 +88,7 @@ function RegisterPage() {
                   
                   
        </form>
-       <p className='flex gap-x-2 justify-between pt-5 mt-5'>
+       <div className='flex gap-x-2 justify-between pt-5 mt-5'>
             Ya tienes una cuenta??
             <Link to="/login" className='text-sky-500'>
             <div className='flex mx-2 px-2 items-start'>
@@ -96,7 +96,7 @@ function RegisterPage() {
             </div>
             </Link>
             
-            </p>
+            </div>
             </div>
       </div>
     );

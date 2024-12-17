@@ -6,7 +6,7 @@ import { IoPersonAdd, IoLogIn, IoEyeSharp, IoEyeOffSharp } from 'react-icons/io5
 
 function LoginPage() {
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const { signin, isAuthenticated, errors: signInErrors } = useAuth();
+  const { signin, isAuthenticated, isAdmin,errors: signInErrors } = useAuth();
   const [passwordShow, setPasswordShown] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -16,7 +16,11 @@ function LoginPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isAuthenticated) navigate('/products');
+    if (isAuthenticated) 
+      if(isAdmin)
+        navigate('/products');
+      else
+      navigate('/getallproducts')
   }, [isAuthenticated, navigate]);
 
   const onSubmit = handleSubmit(async (data) => {

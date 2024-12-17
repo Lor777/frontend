@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import PropTypes from "prop-types";
-import { createProductRequest, getProductsRequest, deleteProductRequest, getProductRequest, updateProductRequest, updateProductRequestNoUpdateImage } from "../api/products";
+import { createProductRequest, getProductsRequest, deleteProductRequest, getProductRequest, updateProductRequest, updateProductRequestNoUpdateImage, getAllProductsRequest } from "../api/products";
 
 
 const ProductsContext = createContext();
@@ -19,7 +19,7 @@ export const useProducts = () => {
 
 
 export function ProductsProvider({ children }) {
-    const [products, setProducts]= useState([]);
+    const [products, setProducts, setErrors, errors]= useState([]);
 
     const createProduct = async(product)=>{
      try{
@@ -38,6 +38,16 @@ export function ProductsProvider({ children }) {
         console.log(error);
       }
     }//fin de getProduct
+
+    const getAllProducts = async ()=>{
+      try{
+        const res= await getAllProductsRequest();
+        setProducts(res.data)
+      }catch(error){
+        setErrors(error.response.data.message);
+        console.log(error)
+      }
+    }
 
     const deletProduct = async(id)=>{
       try{
@@ -85,7 +95,9 @@ export function ProductsProvider({ children }) {
         deletProduct,
         getProduct,
         updateProduct,
-        updateProductNoUpdateImage
+        updateProductNoUpdateImage,
+        errors,
+        getAllProducts
       }}>
         {children}
       </ProductsContext.Provider>
